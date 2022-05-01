@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "tinder_cat",
+    "slug": "tinder_cat",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
