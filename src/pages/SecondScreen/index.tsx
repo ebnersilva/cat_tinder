@@ -5,7 +5,7 @@ import { Container, StyledText } from './styles';
 export function SecondScreen() {
   return (
     <Container>
-      <StyledText>Second Screen</StyledText>
+      <StyledText>02</StyledText>
     </Container>
   );
 }

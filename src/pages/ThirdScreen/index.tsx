@@ -5,7 +5,7 @@ import { Container, StyledText } from './styles';
 export function ThirdScreen() {
   return (
     <Container>
-      <StyledText>Third Screen</StyledText>
+      <StyledText>03</StyledText>
     </Container>
   );
 }

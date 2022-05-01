@@ -1,25 +1,70 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { Image } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { actionExampleIndexRequest } from '~/store/modules/example/index/actions';
-import { Container, StyledButton, StyledText } from './styles';
+
+import CatPawEnabledIcon from '~/assets/cat_paw_enabled_icon.png';
+import CatPawDisabledIcon from '~/assets/cat_paw_disabled_icon.png';
+import ChatEnabledIcon from '~/assets/chat_enabled_icon.png';
+import ChatDisabledIcon from '~/assets/chat_disabled_icon.png';
+import ProfileEnabledIcon from '~/assets/profile_enabled_icon.png';
+import ProfileDisabledIcon from '~/assets/profile_disabled_icon.png';
 import NavigationService from '../../routes/navigation';
+import { Container, BubbleContainer, StyledButton, StyledText } from './styles';
 
 export function Footer() {
   const dispatch = useDispatch();
+  const [selectedMenu, setSelectedMenu] = useState<1 | 2 | 3>(1);
+
   return (
     <Container>
-      <StyledButton onPress={() => NavigationService.navigate('CatVoteScreen')}>
-        <StyledText>First Screen</StyledText>
-      </StyledButton>
+      <BubbleContainer
+        style={{
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 7,
+          },
+          shadowOpacity: 0.41,
+          shadowRadius: 9.11,
 
-      <StyledButton onPress={() => NavigationService.navigate('SecondScreen')}>
-        <StyledText>Secondary Screen</StyledText>
-      </StyledButton>
+          elevation: 14,
+        }}
+      >
+        <StyledButton
+          onPress={() => {
+            NavigationService.navigate('CatVoteScreen');
+            setSelectedMenu(1);
+          }}
+        >
+          <Image
+            source={selectedMenu === 1 ? CatPawEnabledIcon : CatPawDisabledIcon}
+          />
+        </StyledButton>
 
-      <StyledButton onPress={() => NavigationService.navigate('ThirdScreen')}>
-        <StyledText>Third Screen</StyledText>
-      </StyledButton>
+        <StyledButton
+          onPress={() => {
+            NavigationService.navigate('SecondScreen');
+            setSelectedMenu(2);
+          }}
+        >
+          <Image
+            source={selectedMenu === 2 ? ChatEnabledIcon : ChatDisabledIcon}
+          />
+        </StyledButton>
+
+        <StyledButton
+          onPress={() => {
+            NavigationService.navigate('ThirdScreen');
+            setSelectedMenu(3);
+          }}
+        >
+          <Image
+            source={
+              selectedMenu === 3 ? ProfileEnabledIcon : ProfileDisabledIcon
+            }
+          />
+        </StyledButton>
+      </BubbleContainer>
     </Container>
   );
 }

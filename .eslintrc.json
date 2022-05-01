@@ -59,7 +59,8 @@
       "no-shadow": "off",
       "default-param-last": "off",
       "consistent-return": "off",
-      "no-param-reassign": "off"
+      "no-param-reassign": "off",
+      "camelcase": "off"
     },
     "settings": {
       "import/resolver": {

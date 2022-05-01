@@ -2,25 +2,33 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 32px;
+  left: 0px;
+  right: 0px;
 
   display: flex;
-  height: 50px;
-  background: ${props => props.theme.colors.shape};
-  align-items: center;
-  justify-content: space-between;
 
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BubbleContainer = styled.View`
+  display: flex;
+  background: #fff;
   flex-direction: row;
+  height: 44px;
+  border-radius: 36px;
+
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
   display: flex;
-  height: 50px;
-  border-radius: 8px;
-  background-color: ${props => props.theme.colors.shape};
-  margin: 10px;
+  height: 44px;
+  width: 50px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StyledText = styled.Text`
