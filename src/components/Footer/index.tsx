@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Image } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import CatPawEnabledIcon from '~/assets/cat_paw_enabled_icon.png';
 import CatPawDisabledIcon from '~/assets/cat_paw_disabled_icon.png';
@@ -9,10 +8,9 @@ import ChatDisabledIcon from '~/assets/chat_disabled_icon.png';
 import ProfileEnabledIcon from '~/assets/profile_enabled_icon.png';
 import ProfileDisabledIcon from '~/assets/profile_disabled_icon.png';
 import NavigationService from '../../routes/navigation';
-import { Container, BubbleContainer, StyledButton, StyledText } from './styles';
+import { Container, BubbleContainer, StyledButton } from './styles';
 
 export function Footer() {
-  const dispatch = useDispatch();
   const [selectedMenu, setSelectedMenu] = useState<1 | 2 | 3>(1);
 
   return (

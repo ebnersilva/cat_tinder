@@ -1,31 +1,32 @@
 import produce from 'immer';
 
-import { ActionTypes, IExampleIndexState, IExampleIndexAction } from './types';
+import { ActionTypes, ICatVoteStoreState, ICatVoteStoreAction } from './types';
 
-export const INITIAL_STATE: IExampleIndexState = {
-  data: [],
+export const INITIAL_STATE: ICatVoteStoreState = {
+  data: {
+    message: '',
+    id: 0,
+  },
   loading: false,
   error: '',
 };
 
-const banks = (
+const catVoteStore = (
   state = INITIAL_STATE,
-  action: IExampleIndexAction,
-): IExampleIndexState => {
+  action: ICatVoteStoreAction,
+): ICatVoteStoreState => {
   return produce(state, draft => {
     switch (action.type) {
-      case ActionTypes.INDEX_REQUEST: {
+      case ActionTypes.STORE_REQUEST: {
         draft.loading = true;
         break;
       }
-      case ActionTypes.INDEX_SUCCESS: {
+      case ActionTypes.STORE_SUCCESS: {
         draft.loading = false;
-
         draft.data = action.payload.data;
-
         break;
       }
-      case ActionTypes.INDEX_FAILURE: {
+      case ActionTypes.STORE_FAILURE: {
         draft.loading = false;
         draft.error = action.payload.error;
         break;
@@ -37,4 +38,4 @@ const banks = (
   });
 };
 
-export default banks;
+export default catVoteStore;

@@ -1,28 +1,72 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, PanResponder } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import {
+  ActivityIndicator,
+  Animated,
+  PanResponder,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTheme } from 'styled-components';
 import Card from '~/components/Card';
 import FavoriteCatSwitch from '~/components/FavoriteCatSwitch';
 import LikeButton from '~/components/LikeButton';
 import NopeButton from '~/components/NopeButton';
+import { IStoreState } from '~/store';
+import {
+  actionCatBreedIndexRequest,
+  actionRemoveLastCat,
+} from '~/store/modules/catBreed/index/actions';
+import { ICatBreedIndexState } from '~/store/modules/catBreed/index/types';
+import { actionCatVoteStoreRequest } from '~/store/modules/catVote/store/actions';
 import { ACTION_OFFSET, CARD } from '~/utils/constants';
-import { CatBreed, catsArray } from './data';
 
-import { Container, Header, VoteButtonsContainer } from './styles';
+import {
+  Container,
+  Header,
+  VoteButtonsContainer,
+  LoadingView,
+  ShowMoreView,
+} from './styles';
 
 export function CatVoteScreen() {
-  const [cats, setCats] = useState<CatBreed[]>(catsArray);
+  const theme = useTheme();
+  const dispatch = useDispatch();
   const swipe = useRef(new Animated.ValueXY()).current;
 
+  const {
+    data: catsBreedData,
+    page,
+    totalPages,
+    loading: loadingCatBreeds,
+  } = useSelector<IStoreState, ICatBreedIndexState>(
+    state => state.catBreedIndex,
+  );
+
   useEffect(() => {
-    if (cats.length === 0) {
-      setCats(catsArray);
-    }
-  }, [cats]);
+    dispatch(
+      actionCatBreedIndexRequest({
+        page: 1,
+        limit: 10,
+      }),
+    );
+  }, [dispatch]);
+
+  const showMore = useCallback(() => {
+    const isTheEnd = page === totalPages;
+
+    dispatch(
+      actionCatBreedIndexRequest({
+        page: isTheEnd ? 1 : page + 1,
+        limit: 10,
+      }),
+    );
+  }, [page, dispatch, totalPages]);
 
   const removeTopCard = useCallback(() => {
-    setCats(prevState => prevState.slice(1));
+    dispatch(actionRemoveLastCat());
     swipe.setValue({ x: 0, y: 0 });
-  }, [swipe]);
+  }, [swipe, dispatch]);
 
   const handleChoice = useCallback(
     (direction: number) => {
@@ -71,14 +115,29 @@ export function CatVoteScreen() {
       <Header>
         <FavoriteCatSwitch />
       </Header>
-      {cats
+      {loadingCatBreeds && (
+        <LoadingView>
+          <ActivityIndicator color={theme.colors.secondary} />
+        </LoadingView>
+      )}
+      {catsBreedData.length === 0 && !loadingCatBreeds && (
+        <ShowMoreView>
+          <TouchableOpacity onPress={showMore}>
+            <Text>Show more</Text>
+          </TouchableOpacity>
+        </ShowMoreView>
+      )}
+
+      {catsBreedData
         .map((cat, index) => {
           const isFirst = index === 0;
           const dragHandlers = isFirst ? panResponder.panHandlers : {};
 
+          if (!cat.image) return;
+
           return (
             <Card
-              key={cat.image.url}
+              key={cat.image.url + cat.id}
               image_url={cat.image.url}
               name={cat.name}
               affection_level={cat.affection_level}
@@ -93,7 +152,23 @@ export function CatVoteScreen() {
 
       <VoteButtonsContainer>
         <NopeButton onPress={() => handleChoice(-1)} />
-        <LikeButton onPress={() => handleChoice(1)} />
+        <LikeButton
+          onPress={() => {
+            handleChoice(1);
+
+            const currentCat = catsBreedData[0];
+            const imageId = currentCat.image?.id;
+
+            if (!imageId) return;
+
+            dispatch(
+              actionCatVoteStoreRequest({
+                image_id: imageId,
+                value: 1,
+              }),
+            );
+          }}
+        />
       </VoteButtonsContainer>
     </Container>
   );

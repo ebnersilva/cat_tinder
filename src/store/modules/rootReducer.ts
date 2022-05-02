@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
-import exampleIndex from '~/store/modules/example/index/reducer';
+import catBreedIndex from '~/store/modules/catBreed/index/reducer';
+import catVoteStore from '~/store/modules/catVote/store/reducer';
 import { IStoreState } from '..';
 
 const appReducers = combineReducers<IStoreState>({
-  exampleIndex,
+  catBreedIndex,
+  catVoteStore,
 });
 
 export default appReducers;

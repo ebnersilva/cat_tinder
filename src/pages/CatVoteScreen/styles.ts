@@ -50,3 +50,29 @@ export const VoteButtonsContainer = styled.View`
 
   margin-bottom: 80px;
 `;
+
+export const LoadingView = styled.View`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ShowMoreView = styled.View`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;

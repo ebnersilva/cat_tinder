@@ -60,7 +60,8 @@
       "default-param-last": "off",
       "consistent-return": "off",
       "no-param-reassign": "off",
-      "camelcase": "off"
+      "camelcase": "off",
+      "import/no-unresolved": "off"
     },
     "settings": {
       "import/resolver": {
