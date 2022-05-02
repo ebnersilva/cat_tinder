@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import '~/config/window';
-import '~/config/reactotronConfig';
+// import '~/config/window';
+// import '~/config/reactotronConfig';
 import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
